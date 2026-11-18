@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuizPulse Task Manager</title>
+<style>
+body {
+  font-family: Arial;
+  background-color: lightyellow;
+  text-align: center;
+}
+h1 {
+  color: purple;
+}
+input {
+  padding: 8px;
+  width: 200px;
+}
+button {
+  padding: 6px 12px;
+  background-color: purple;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+#error {
+  color: red;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  width: 400px;
+  margin: auto;
+}
+li {
+  background-color: white;
+  border: 2px solid purple;
+  border-radius: 8px;
+  margin: 8px;
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+<h1>QuizPulse Task Manager</h1>
+<input type="text" id="taskBox" placeholder="Enter a task">
+<button onclick="addTask()">Add</button>
+<p id="error"></p>
+<ul id="list"></ul>
+<script>
+var tasks = [];
+function addTask() {
+  var text = document.getElementById("taskBox").value;
+  var error = document.getElementById("error");
+
+  if (text.trim() == "") {
+    error.innerHTML = "Please enter a task";
+    return;
+  }
+  error.innerHTML = "";
+  tasks.push(text);
+  document.getElementById("taskBox").value = "";
+  showTasks();
+}
+function showTasks() {
+  var list = document.getElementById("list");
+  list.innerHTML = "";
+  for (var i = 0; i < tasks.length; i++) {
+    list.innerHTML += "<li>" + tasks[i] +
+      " <button onclick='editTask(" + i + ")'>Edit</button>" +
+      " <button onclick='deleteTask(" + i + ")'>Delete</button></li>";
+  }
+}
+function editTask(i) {
+  var newText = prompt("Edit your task:", tasks[i]);
+  if (newText != null && newText.trim() != "") {
+    tasks[i] = newText;
+    showTasks();
+  }
+}
+function deleteTask(i) {
+  tasks.splice(i, 1);
+  showTasks();
+}
+</script>
+</body>
+</html>
